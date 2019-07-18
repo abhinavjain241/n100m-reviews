@@ -43,10 +43,7 @@ def check_profanity():
 
 def check_profanity_bulk(csv_file, threshold, language):
     request_id = uuid.uuid4()
-    # df = pd.read_csv(csv_file)
-
     reviews = load_csv(csv_file, 10)
-    # print(reviews)
     review_profanity_map = {}
     for review in reviews:
         review_profanity_map[review] = profanity.get_profanity_score(review, threshold, language)
