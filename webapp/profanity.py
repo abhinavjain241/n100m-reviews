@@ -1,4 +1,4 @@
-from fuzzywuzzy import fuzz
+from fuzzywuzzy import fuzz, process
 from config import HINDI_DICTIONARY_PATH, ENG_DICTIONARY_PATH, COMMON_WORD_DICTIONARY
 
 THRESHOLD_DEFAULT = 50
@@ -21,20 +21,8 @@ with open(COMMON_WORD_DICTIONARY) as file:
 def get_profanity_score(text,
                         thresh=THRESHOLD_DEFAULT,
                         lang=LANGUAGE_DEFAULT):
-    profane_map = {}
-    for word in text.split(" "):
-        # profane_map = {}
-        if lang == 'en' and word in common_word_set:
-            continue
-        for profane_word in profane_words[lang]:
-            match = fuzz.ratio(word, profane_word)
-            # match = fuzz.token_set_ratio(text, profane_word)
-            if match > thresh:
-                # profane_map[profane_word] = match
-                profane_map[word] = (profane_word, match)
+    profane_list = []
+    if lang == 'en' and text in common_word_set:
+        return profane_list
 
-    return profane_map
-
-# if __name__ == '__main__':
-#     print(get_profanity_score("review goes here", 70, "en"))
-    # print(common_word_set)
+    return process.extractOne(text, profane_words[lang], scorer=fuzz.ratio, score_cutoff=thresh)

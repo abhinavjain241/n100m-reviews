@@ -1,6 +1,5 @@
 import re
 
-
 emoji_pattern = re.compile("["
                            u"\U0001F600-\U0001F64F"  # emoticons
                            u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -10,7 +9,7 @@ emoji_pattern = re.compile("["
 
 
 def remove_emojis(text):
-    text.replace("\n", " ")
+    text = text.replace("\n", " ")
     text = emoji_pattern.sub(r"", text)
     text = text.strip()
     return text
@@ -37,8 +36,8 @@ def preprocess(text):
 
 
 def filter_non_asci(text):
-   c_list = ""
-   for c in text:
-       if ord(c) < 128: c_list += c
+    c_list = ""
+    for c in text:
+        if ord(c) < 128: c_list += c
 
-   return c_list
+    return c_list

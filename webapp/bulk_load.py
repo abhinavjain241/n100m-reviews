@@ -4,9 +4,10 @@ def load_csv(csv_file, nrows=1 * 5000000):
     csv_dtype = {'reason': 'str'}
     # df = pd.read_csv(csv_file, delimiter=",", nrows=nrows, dtype=csv_dtype, quotechar='\'', escapechar="\\", skiprows=1,
     #                  names=['review_id', 'text', 'status', 'reason'])
-    df = pd.read_csv(csv_file, delimiter=",", nrows=nrows, dtype=csv_dtype, quotechar='\'', escapechar="\\", skiprows=1,
+    df = pd.read_csv(csv_file, delimiter=",", nrows=nrows, dtype=csv_dtype, quotechar="\"", escapechar="\\", skiprows=1,
                      names=['text'])
     df = df.dropna(subset=['text'])
+    print(df.shape)
     # uncomment in case of original review file
 
     # df['reason'] = df[['reason']].fillna('-')

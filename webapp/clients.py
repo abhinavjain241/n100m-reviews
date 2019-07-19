@@ -17,9 +17,13 @@ class LivAI:
         self.payload["action_flag"] = action_flag
 
     def call(self, field):
-        r = requests.post(self.url, data=json.dumps(self.payload), headers=self.headers)
-        obj = json.loads(r.content)
-        return obj['detail'][field]
+        try:
+            r = requests.post(self.url, data=json.dumps(self.payload), headers=self.headers)
+            obj = json.loads(r.content)
+            return obj['detail'][field]
+        except:
+            print(r.content)
+            return []
 
 
 if __name__ == '__main__':
