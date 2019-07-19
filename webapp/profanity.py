@@ -3,7 +3,7 @@ from fuzzywuzzy import fuzz
 THRESHOLD_DEFAULT = 50
 LANGUAGE_DEFAULT = "hi"
 
-profane_dict = {"hi": '../../../datasets/hindi_profane_words.csv', "en": '../../../datasets/english_profane_words.csv'}
+profane_dict = {"hi": '../datasets/hindi_profane_words.csv', "en": '../datasets/english_profane_words.csv'}
 profane_words = {}
 
 for lang, filename in profane_dict.items():
