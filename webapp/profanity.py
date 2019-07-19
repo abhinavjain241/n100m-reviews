@@ -1,9 +1,10 @@
 from fuzzywuzzy import fuzz
+from config import HINDI_DICTIONARY_PATH, ENG_DICTIONARY_PATH
 
 THRESHOLD_DEFAULT = 50
 LANGUAGE_DEFAULT = "hi"
 
-profane_dict = {"hi": '../datasets/hindi_profane_words.csv', "en": '../datasets/english_profane_words.csv'}
+profane_dict = {"hi": HINDI_DICTIONARY_PATH, "en": ENG_DICTIONARY_PATH}
 profane_words = {}
 
 for lang, filename in profane_dict.items():
@@ -16,14 +17,13 @@ def get_profanity_score(text,
                         lang=LANGUAGE_DEFAULT):
     profane_map = {}
     for word in text.split(" "):
-    # profane_map = {}
+        # profane_map = {}
         for profane_word in profane_words[lang]:
             match = fuzz.ratio(word, profane_word)
             # match = fuzz.token_set_ratio(text, profane_word)
             if match > thresh:
                 # profane_map[profane_word] = match
                 profane_map[word] = (profane_word, match)
-
 
     return profane_map
 
