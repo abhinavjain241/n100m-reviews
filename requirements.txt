@@ -1,1 +1,7 @@
 Flask
+pandas
+requests
+future==0.16.0
+python-Levenshtein
+fuzzywuzzy
+fasttext==0.9.1

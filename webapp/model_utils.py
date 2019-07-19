@@ -1,5 +1,4 @@
 import fasttext
-from fasttext import train_supervised
 from config import MODEL_PATH
 
 model = fasttext.load_model(MODEL_PATH)

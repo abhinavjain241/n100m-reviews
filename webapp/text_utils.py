@@ -1,14 +1,5 @@
-import fasttext
-from fasttext import train_supervised
-
-import pandas as pd
-import random
-import requests
-import json
-from pprint import pprint
-
 import re
-import string
+
 
 emoji_pattern = re.compile("["
                            u"\U0001F600-\U0001F64F"  # emoticons
