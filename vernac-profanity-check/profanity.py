@@ -15,10 +15,15 @@ def get_profanity_score(text,
                         thresh=THRESHOLD_DEFAULT,
                         lang=LANGUAGE_DEFAULT):
     profane_map = {}
-    for profane_word in profane_words[lang]:
-        match = fuzz.token_set_ratio(text, profane_word)
-        if match > thresh:
-            profane_map[profane_word] = match
+    for word in text.split(" "):
+    # profane_map = {}
+        for profane_word in profane_words[lang]:
+            match = fuzz.ratio(word, profane_word)
+            # match = fuzz.token_set_ratio(text, profane_word)
+            if match > thresh:
+                # profane_map[profane_word] = match
+                profane_map[word] = (profane_word, match)
+
 
     return profane_map
 
