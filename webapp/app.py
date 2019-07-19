@@ -77,7 +77,8 @@ def get_language():
     liv_ai_client = LivAI()
 
     wc_list = []
-    profanity_scores = {}
+    # profanity_scores = {}
+    profanity_scores = []
 
     if label == 'hie' or label == 'eng':
         # preproceseing
@@ -86,7 +87,9 @@ def get_language():
         # call WC
         liv_ai_client.generate_payload(review_text, "FOR_WC")
         wc_list = liv_ai_client.call('word_classifier')
-        profanity_scores = profanity.get_profanity_score(review_text, threshold, label[:2])
+        for word in wc_list:
+            # profanity_scores.append(profanity.get_profanity_score(review_text, threshold, label[:2]))
+            profanity_scores.append(profanity.get_profanity_score(review_text, threshold, 'en' if word[1] == 1 else 'hi'))
 
     elif label == 'hin':
         # call REV
@@ -97,7 +100,8 @@ def get_language():
         # converted_text = preprocess(converted_text)
         liv_ai_client.generate_payload(converted_text, "FOR_WC")
         wc_list = liv_ai_client.call('word_classifier')
-        profanity_scores = profanity.get_profanity_score(converted_text, threshold, label[:2])
+        for word in wc_list:
+            profanity_scores.append(profanity.get_profanity_score(review_text, threshold, 'en' if word[1] == 1 else 'hi'))
         # call WC now
     else:
         lang_response = {
@@ -107,10 +111,15 @@ def get_language():
         return jsonify({'requestId': request_id,
                         'body': lang_response}), 200
 
-    if len(profanity_scores) == 0:
+    for profanity_map in profanity_scores:
+        if len(profanity_map) > 0:
+            moderation_status = "rejected"
+            break
         moderation_status = "accepted"
-    else:
-        moderation_status = "rejected"
+    # if len(profanity_scores) == 0:
+    #     moderation_status = "accepted"
+    # else:
+    #     moderation_status = "rejected"
 
     # wc_list = [for w in wc_list: if w == 1: 'en' else 'hi']
 
